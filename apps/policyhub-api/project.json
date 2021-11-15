@@ -1,0 +1,52 @@
+{
+  "root": "apps/policyhub-api",
+  "sourceRoot": "apps/policyhub-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/policyhub-api",
+        "main": "apps/policyhub-api/src/main.ts",
+        "tsConfig": "apps/policyhub-api/tsconfig.app.json",
+        "assets": ["apps/policyhub-api/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/policyhub-api/src/environments/environment.ts",
+              "with": "apps/policyhub-api/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "policyhub-api:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/policyhub-api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/policyhub-api"],
+      "options": {
+        "jestConfig": "apps/policyhub-api/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
